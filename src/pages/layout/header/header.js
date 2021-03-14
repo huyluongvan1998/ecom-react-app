@@ -1,38 +1,49 @@
-import React from 'react'
-import 'primeicons/primeicons.css';
-
-import { 
+import "primeicons/primeicons.css";
+import React from "react";
+import {
     Navbar,
-    NavbarHeader,
-    NavbarCenter,
+
+    NavbarCenter, NavbarHeader,
+
     NavbarLogo,
-    NavList,
-    NavItem,
- } from "./style";
+
+    NavItem, NavList
+} from "./style";
+
+import  StyledLink  from "../../../components/link/index";
+
 
 const header = () => {
-    return (
-        <Navbar>
-            <NavbarCenter>
-                <NavbarHeader>
-                    <NavbarLogo />
-                        <NavList>
-                            <NavItem>Home</NavItem>
-                            <NavItem>About</NavItem>
-                            <NavItem>Products</NavItem>
-                        </NavList>
-                        <NavList>
-                            <NavItem large grey>
-                            <i className="pi pi-shopping-cart"></i>
-                                Cart</NavItem>
-                            <NavItem large grey>
-                                <i className='pi pi-user-plus'></i>
-                                Login</NavItem>
-                        </NavList>
-                </NavbarHeader>
-            </NavbarCenter>
-        </Navbar>
-    )
-}
+  return (
+    <Navbar>
+      <NavbarCenter>
+        <NavbarHeader>
+          <NavbarLogo />
+          <NavList>
+            <NavItem>
+               <StyledLink path='Home'> Home </StyledLink> 
+            </NavItem>
+            <NavItem>
+                <StyledLink path='About'> About </StyledLink> 
+            </NavItem>
+            <NavItem>
+                <StyledLink path='Product'> Product </StyledLink> 
+            </NavItem>
+          </NavList>
+          <NavList>
+            <NavItem large grey>
+              <i className="pi pi-shopping-cart"></i>
+              Cart
+            </NavItem>
+            <NavItem large grey>
+              <i className="pi pi-user-plus"></i>
+              Login
+            </NavItem>
+          </NavList>
+        </NavbarHeader>
+      </NavbarCenter>
+    </Navbar>
+  );
+};
 
-export default header
+export default header;

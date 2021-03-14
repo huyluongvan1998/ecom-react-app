@@ -1,12 +1,11 @@
-import styled from "styled-components"
-
+import styled from "styled-components";
 
 const GlobalStyle = styled.div`
+  body {
+    font-family: "-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif";
+    font-size: 1.5rem;
+  }
 
-body {
-    font-family: '-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif'
-}
-    
   .m-0 {
     margin: 0;
   }
@@ -61,13 +60,12 @@ body {
   }
 
   .justify-content-between {
-    justify-content: space-between
+    justify-content: space-between;
   }
 
   .w-100-per {
     width: 100%;
   }
-
-` 
+`;
 
 export default GlobalStyle;
