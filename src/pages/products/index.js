@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Toolbar from '../../components/toolbar/toolbar';
 import {
         Container,
@@ -7,10 +7,17 @@ import {
         SideBarContainer
     } from "./style";
 import { fetchProduct } from "../../store/modules/product/slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ProductSelector } from "../../store/modules/product/selector";
 
 const ProductPage = () => {
     const dispatch = useDispatch();
+
+    useSelector(ProductSelector)
+    useEffect(() => {
+        
+        console.log('test ');
+    })
     return (
         <div>
             <Toolbar  Path='Home' Page='Product' /> 
