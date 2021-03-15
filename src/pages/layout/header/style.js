@@ -35,5 +35,5 @@ export const NavItem = styled.li`
   font-size: ${(props) => (props.large ? "1.5rem" : "1rem")};
   text-transform: capitalize;
   letter-spacing: 0.1rem;
-  padding: 0.5rem;
+  padding: 0.5rem !important;
 `;

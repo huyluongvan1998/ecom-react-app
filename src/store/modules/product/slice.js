@@ -1,21 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const ProductSlice = createSlice({
-  name: 'product',
+  name: "product",
   initialState: {
     isLoading: false,
-    product: [],
+    product: {},
+    products: [],
   },
   reducers: {
     // Configs
     fetchProduct: () => {},
-
+    fetchAllProduct: () => {},
     setFetchProduct: (state, action) => {
-        const { payload } = action
-        state.product = payload;
-        console.log('state: ', state.product);
+      const { payload } = action;
+      state.product = payload;
     },
-   
+    setAllFetchProduct: (state, action) => {
+      const { payload } = action;
+      state.products = payload;
+    },
+
     startLoading: (state) => {
       state.isLoading = true;
     },
@@ -23,19 +27,19 @@ const ProductSlice = createSlice({
     endLoading: (state) => {
       state.isLoading = false;
     },
-
   },
   extraReducers: (builder) => {
     //call another slice.
-    },
-
+  },
 });
 
 export const {
   fetchProduct,
+  fetchAllProduct,
   setFetchProduct,
   startLoading,
-  endLoading
+  endLoading,
+  setAllFetchProduct,
 } = ProductSlice.actions;
 
 export default ProductSlice.reducer;

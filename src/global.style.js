@@ -1,11 +1,19 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const GlobalStyle = styled.div`
   body {
     font-family: "-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif";
     font-size: 1.5rem;
+    color: #102a42;
   }
-
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  a {
+    text-decoration: none;
+  }
   .m-0 {
     margin: 0;
   }
@@ -66,6 +74,6 @@ const GlobalStyle = styled.div`
   .w-100-per {
     width: 100%;
   }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

@@ -1,8 +1,16 @@
-import React from "react";
-import StyledButton from "./style";
+import React from "react"
+import StyledButton, { StyledSearchButton } from "./style"
 
-const Button = ({ content }) => {
-  return <StyledButton>{content}</StyledButton>;
-};
+const Button = ({ children }) => {
+  return <StyledButton>{children}</StyledButton>
+}
 
-export default Button;
+export default Button
+
+export const SearchButton = ({ text, color, clicked }) => {
+  return (
+    <StyledSearchButton color={color} onClick={clicked}>
+      {text ? text : ""}
+    </StyledSearchButton>
+  )
+}
