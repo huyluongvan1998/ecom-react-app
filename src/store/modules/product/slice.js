@@ -13,11 +13,11 @@ const ProductSlice = createSlice({
   },
   reducers: {
     // Configs
-    fetchProduct: () => {},
-    fetchAllProduct: () => {},
+    fetchProduct: () => { },
+    fetchAllProduct: () => { },
     setFetchProduct: (state, action) => {
       const { payload } = action
-      state.product = {...payload, amount: 1}
+      state.product = { ...payload, amount: 1 }
     },
     setAllFetchProduct: (state, action) => {
       const { payload } = action
@@ -34,8 +34,8 @@ const ProductSlice = createSlice({
 
     //Cart Function
     increment: (state) => {
-      if(state.product.amount < state.product.stock) {
-        state.product.amount +=1
+      if (state.product.amount < state.product.stock) {
+        state.product.amount += 1
       }
     },
 
@@ -47,12 +47,12 @@ const ProductSlice = createSlice({
     },
     addToCart: (state, action) => {
       const { payload } = action;
-      state.cartProducts.map(p => p.id === payload ? console.log('a'): console.log('b'))
-      state.cartProducts = [
-        ...state.cartProducts,
-        state.product
-      ]
-      
+      if (state.cartProducts.length > 0) {
+        state.cartProducts.map(p => p.id === payload ? alert('Product Already in cart!') : state.cartProducts = [...state.cartProducts, state.product]);
+      } else {
+        state.cartProducts = [...state.cartProducts, state.product]
+
+      }
     },
 
     //Increase and Decrease product amount (specific)
@@ -80,7 +80,7 @@ const ProductSlice = createSlice({
       )
     },
     deleteProduct: (state, action) => {
-      const {payload} = action
+      const { payload } = action
       console.log('test: ', payload)
       state.cartProducts = state.cartProducts.filter(p => p.id !== payload)
     },
