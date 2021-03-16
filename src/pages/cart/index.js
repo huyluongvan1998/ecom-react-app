@@ -11,6 +11,8 @@ import {
   productDecrement,
   productIncrement,
   subTotal,
+  deleteProduct,
+  deleteAll
 } from "../../store/modules/product/slice"
 import {
   CartAmountContainer,
@@ -35,11 +37,13 @@ const CartPage = () => {
   const cartProduct = useSelector(CartProductSelector)
   const dispatch = useDispatch()
   const total = useSelector(TotalSelector)
+  
+  //Calculate Total Price
   useEffect(() => {
-    return () => {
-      dispatch(subTotal())
-    }
+    dispatch(subTotal())
   }, [cartProduct, dispatch])
+// Calculate Total Price
+
   const cartProducts =
     cartProduct.length > 0 ? (
       (cartProduct || []).map((product, idx) => (
@@ -70,7 +74,7 @@ const CartPage = () => {
             />
           </CartAmountContainer>
           <PriceTag>${currencyHelper(product.amount * product.price)}</PriceTag>
-          <RemoveButton className="pi pi-trash" />
+          <RemoveButton className="pi pi-trash" onClick={() => dispatch(deleteProduct(product.id))} />
         </ProductContainer>
       ))
     ) : (
@@ -97,7 +101,7 @@ const CartPage = () => {
             <StyledBreakBar />
             <LinkContainer>
               <ContinueButton to="/product">Continue Shopping</ContinueButton>
-              <button>Clear Shopping Cart</button>
+              <button onClick={() => dispatch(deleteAll())}>Clear Shopping Cart</button>
             </LinkContainer>
             <TotalContainer>
               <div>

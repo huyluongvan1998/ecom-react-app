@@ -67,8 +67,8 @@ const ProductSlice = createSlice({
     productDecrement: (state, action) => {
       const { payload } = action
       state.cartProducts.map((prod) => {
-        if (prod.id === payload && prod.amount > 1) {
-          return (prod.amount -= 0)
+        if (prod.id === payload && prod.amount > 0) {
+          return (prod.amount -= 1)
         }
         return prod.amount
       })
@@ -76,9 +76,17 @@ const ProductSlice = createSlice({
     subTotal: (state) => {
       state.total = 0
       state.cartProducts.map(
-        (product) => (state.total += product.amount * product.price)
+        (product) => (state.total += (product.amount * product.price))
       )
     },
+    deleteProduct: (state, action) => {
+      const {payload} = action
+      console.log('test: ', payload)
+      state.cartProducts = state.cartProducts.filter(p => p.id !== payload)
+    },
+    deleteAll: (state) => {
+      state.cartProducts = []
+    }
   },
   extraReducers: (builder) => {
     //call another slice.
@@ -98,6 +106,8 @@ export const {
   productIncrement,
   productDecrement,
   subTotal,
+  deleteProduct,
+  deleteAll
 } = ProductSlice.actions
 
 export default ProductSlice.reducer
