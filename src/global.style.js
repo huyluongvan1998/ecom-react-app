@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 const GlobalStyle = styled.div`
-  body {
+  main {
     font-family: "-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif";
     font-size: 1.5rem;
     color: #102a42;
@@ -13,6 +13,9 @@ const GlobalStyle = styled.div`
   }
   a {
     text-decoration: none;
+  }
+  p {
+    font-size: 1rem;
   }
   .m-0 {
     margin: 0;

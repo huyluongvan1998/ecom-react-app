@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 export const Container = styled.div`
   min-height: calc(80vh - 10rem);
@@ -37,6 +38,21 @@ export const ProductHeader = styled.div`
   position: relative;
   background: #222;
   border-radius: 0.25rem;
+
+  &:hover {
+    & > a,
+    i {
+      opacity: 1;
+      z-index: 99;
+    }
+  }
+  &:hover {
+    & > img {
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 98;
+      opacity: 0.3;
+    }
+  }
 `
 
 export const ProductImage = styled.img`
@@ -95,4 +111,38 @@ export const PriceTag = styled.span`
 
 export const SearchPrice = styled.input`
   float: left;
+`
+export const ShippingLabel = styled.label``
+
+export const ShippingContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  text-transform: capitalize;
+  column-gap: 0.5rem;
+  font-size: 1rem;
+`
+
+export const IconLink = styled(Link)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ab7a61;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  transition: all 0.3s linear;
+  opacity: 0;
+  cursor: pointer;
+`
+export const IconIcon = styled.i`
+  font-size: 1.25rem;
+  color: #fff;
+  font-weight: bolder;
 `

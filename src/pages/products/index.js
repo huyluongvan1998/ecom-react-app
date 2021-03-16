@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react"
+
 import { useDispatch, useSelector } from "react-redux"
 import { SearchButton } from "../../components/button"
 import {
@@ -14,6 +15,8 @@ import { fetchAllProduct } from "../../store/modules/product/slice"
 import {
   Container,
   GridContainer,
+  IconIcon,
+  IconLink,
   PriceContainer,
   PriceTag,
   ProductContainer,
@@ -26,6 +29,7 @@ import {
   SearchPrice,
   SearchText,
   SearchTitleStyled,
+  ShippingContainer,
   SideBar,
   SideBarContainer,
 } from "./style"
@@ -41,6 +45,7 @@ const ProductPage = () => {
     searchCompany: "",
     searchColor: "",
     searchPrice: 309999,
+    freeshipping: false,
   })
   // End Search State
 
@@ -92,12 +97,12 @@ const ProductPage = () => {
       searchCompany: "All",
       searchColor: "All",
       searchPrice: 309999,
+      freeshipping: false,
     })
   }
 
   const filterProduct = useCallback(() => {
     let temp_arr = products || []
-    console.log(filterState.searchText)
     //______________________________________________________Search by condition_______________________________________________________
     if (filterState.searchText) {
       temp_arr = temp_arr.filter((p) =>
@@ -125,6 +130,9 @@ const ProductPage = () => {
     if (filterState.searchPrice) {
       temp_arr = temp_arr.filter((p) => p.price <= filterState.searchPrice)
     }
+    if (filterState.freeshipping) {
+      temp_arr = temp_arr.filter((p) => p.shipping)
+    }
     setProductArr(temp_arr)
   }, [filterState, products])
   //______________________________________________________Search by condition_______________________________________________________
@@ -151,6 +159,9 @@ const ProductPage = () => {
         <ProductContainer key={product.id}>
           <ProductHeader>
             <ProductImage src={product.image}></ProductImage>
+            <IconLink to={`/product/details/${product.id}`}>
+              <IconIcon className="pi pi-search"></IconIcon>
+            </IconLink>
           </ProductHeader>
           <ProductFooter>
             <h5 style={{ marginBottom: " 0px", fontWeight: "400" }}>
@@ -233,15 +244,23 @@ const ProductPage = () => {
                 }
               />
               <br />
-              <label>
-                FreeShipping
-                <input
-                  type="checkbox"
-                  id="freeship"
-                  name="freeship"
-                  value="freeshiping"
-                />
-              </label>
+              <ShippingContainer>
+                <label>
+                  Freeshipping
+                  <input
+                    type="checkbox"
+                    id="freeship"
+                    name="freeship"
+                    checked={filterState.freeshipping}
+                    onChange={() =>
+                      setFilterState((prev) => ({
+                        ...prev,
+                        freeshipping: !filterState.freeshipping,
+                      }))
+                    }
+                  />
+                </label>
+              </ShippingContainer>
               <ResetFilterButton onClick={() => resetState()}>
                 Clear Filter
               </ResetFilterButton>

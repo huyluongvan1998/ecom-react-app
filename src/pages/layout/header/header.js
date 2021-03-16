@@ -1,17 +1,15 @@
-import "primeicons/primeicons.css";
-import React from "react";
+import "primeicons/primeicons.css"
+import React from "react"
 import {
-    Navbar,
+  Navbar,
+  NavbarCenter,
+  NavbarHeader,
+  NavbarLogo,
+  NavItem,
+  NavList,
+} from "./style"
 
-    NavbarCenter, NavbarHeader,
-
-    NavbarLogo,
-
-    NavItem, NavList
-} from "./style";
-
-import  StyledLink  from "../../../components/link/index";
-
+import StyledLink from "../../../components/link/index"
 
 const header = () => {
   return (
@@ -21,29 +19,33 @@ const header = () => {
           <NavbarLogo />
           <NavList>
             <NavItem>
-               <StyledLink path='Home'> Home </StyledLink> 
+              <StyledLink path="home"> Home </StyledLink>
             </NavItem>
             <NavItem>
-                <StyledLink path='About'> About </StyledLink> 
+              <StyledLink path="about"> About </StyledLink>
             </NavItem>
             <NavItem>
-                <StyledLink path='Product'> Product </StyledLink> 
+              <StyledLink path="product"> Product </StyledLink>
             </NavItem>
           </NavList>
           <NavList>
-            <NavItem large grey>
-              <i className="pi pi-shopping-cart"></i>
-              Cart
-            </NavItem>
-            <NavItem large grey>
-              <i className="pi pi-user-plus"></i>
-              Login
-            </NavItem>
+            <StyledLink path="cart">
+              <NavItem large grey>
+                <i className="pi pi-shopping-cart"></i>
+                Cart
+              </NavItem>
+            </StyledLink>
+            <StyledLink path="home">
+              <NavItem large grey>
+                <i className="pi pi-user-plus"></i>
+                Login
+              </NavItem>
+            </StyledLink>
           </NavList>
         </NavbarHeader>
       </NavbarCenter>
     </Navbar>
-  );
-};
+  )
+}
 
-export default header;
+export default header
