@@ -1,5 +1,20 @@
 import styled from "styled-components";
 
+export const toolbar = styled.div`
+    background: #eaded7;
+    width: 100%;
+    min-height: 20vh;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: #453227;
+`
+export const toolbarCenter = styled.div`
+    width: 90vw;
+    margin: 0 auto;
+    max-width: 100vw;
+`
+
 export const GridContainer = styled.section`
   height: calc(100vh - 5rem);
   grid-template-columns: 1fr 1fr;

@@ -17,7 +17,7 @@ const ProductSlice = createSlice({
     fetchAllProduct: () => {},
     setFetchProduct: (state, action) => {
       const { payload } = action
-      state.product = payload
+      state.product = {...payload, amount: 1}
     },
     setAllFetchProduct: (state, action) => {
       const { payload } = action
@@ -34,22 +34,25 @@ const ProductSlice = createSlice({
 
     //Cart Function
     increment: (state) => {
-      state.amount += 1
+      if(state.product.amount < state.product.stock) {
+        state.product.amount +=1
+      }
     },
 
     decrement: (state) => {
-      if (state.amount > 1) {
-        state.amount -= 1
+      if (state.product.amount > 0) {
+        state.product.amount -= 1
       }
       return
     },
-    addToCart: (state) => {
+    addToCart: (state, action) => {
+      const { payload } = action;
+      state.cartProducts.map(p => p.id === payload ? console.log('a'): console.log('b'))
       state.cartProducts = [
         ...state.cartProducts,
-        { ...state.product, amount: state.amount },
+        state.product
       ]
-      state.cartAmount += state.amount
-      state.amount = 1
+      
     },
 
     //Increase and Decrease product amount (specific)
@@ -57,7 +60,7 @@ const ProductSlice = createSlice({
     productIncrement: (state, action) => {
       const { payload } = action
       state.cartProducts.map((prod) =>
-        prod.id === payload ? (prod.amount += 1) : prod.amount
+        prod.id === payload && prod.amount <= prod.stock ? (prod.amount += 1) : prod.amount
       )
     },
 
@@ -65,7 +68,7 @@ const ProductSlice = createSlice({
       const { payload } = action
       state.cartProducts.map((prod) => {
         if (prod.id === payload && prod.amount > 1) {
-          return (prod.amount -= 1)
+          return (prod.amount -= 0)
         }
         return prod.amount
       })

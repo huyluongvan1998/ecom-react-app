@@ -9,7 +9,7 @@ export const ProductsSelector = createSelector(getAllProducts, (p) => p)
 const getLoading = (state) => state.product.isLoading
 export const LoadingSelector = createSelector(getLoading, (p) => p)
 
-const getAmount = (state) => state.product.amount
+const getAmount = (state) => state.product.product.amount
 export const AmountSelector = createSelector(getAmount, (p) => p)
 
 const getCartProduct = (state) => state.product.cartProducts

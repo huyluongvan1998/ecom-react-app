@@ -155,7 +155,7 @@ const ProductDetail = ({ match }) => {
                 ></LogicButton>
               </AmountContainer>
 
-              <CartButton to="/cart" onClick={() => dispatch(addToCart())}>
+              <CartButton to="/cart" onClick={() => dispatch(addToCart(product.id))}>
                 Add To Cart
               </CartButton>
             </ContentHolder>
