@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
-import React from "react"
-import { useDispatch, useSelector } from "react-redux"
-import Toolbar from "../../components/toolbar/toolbar"
-import ConvertStarHelper from "../../helper/starReview"
-import currencyHelper from "../../helper/currency"
+import { useEffect, useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Toolbar from "../../components/toolbar/toolbar";
+import ConvertStarHelper from "../../helper/starReview";
+import currencyHelper from "../../helper/currency";
 import {
   BackHomeLink,
   PageContainer,
@@ -25,43 +25,43 @@ import {
   AmountValue,
   ColorContainer,
   CartButton,
-} from "./style"
+} from "./style";
 import {
   fetchProduct,
   increment,
   decrement,
   addToCart,
-} from "../../store/modules/product/slice"
+} from "../../store/modules/product/slice";
 import {
   ProductSelector,
   AmountSelector,
   LoadingSelector,
-} from "../../store/modules/product/selector"
+} from "../../store/modules/product/selector";
 const ProductDetail = ({ match }) => {
   // GET PARAMS FROM URL AND DISPATCH
-  const paramsUrl = match.params.id
-  const dispatch = useDispatch()
+  const paramsUrl = match.params.id;
+  const dispatch = useDispatch();
 
   // USE SELECTOR SECTION
-  const product = useSelector(ProductSelector)
-  const isLoading = useSelector(LoadingSelector)
-  const amount = useSelector(AmountSelector)
+  const product = useSelector(ProductSelector);
+  const isLoading = useSelector(LoadingSelector);
+  const amount = useSelector(AmountSelector);
   // USE SELECTOR SECTION
 
-  const starReview = ConvertStarHelper(product.stars)
+  const starReview = ConvertStarHelper(product.stars);
 
-  const [currentImage, setCurrentImage] = useState()
+  const [currentImage, setCurrentImage] = useState();
 
   //GET Product By ID in the INITIAL STATE;
   useEffect(() => {
-    dispatch(fetchProduct(paramsUrl))
-  }, [dispatch, paramsUrl])
+    dispatch(fetchProduct(paramsUrl));
+  }, [dispatch, paramsUrl]);
 
   useEffect(() => {
     if (product && product.images && product.images.length > 0) {
-      setCurrentImage(product.images[0].url)
+      setCurrentImage(product.images[0].url);
     }
-  }, [product])
+  }, [product]);
   //USEEFFECT SECTION
   const productDetails = !isLoading ? (
     <section>
@@ -82,7 +82,7 @@ const ProductDetail = ({ match }) => {
     </section>
   ) : (
     <div>loading...</div>
-  )
+  );
 
   return (
     <div>
@@ -155,7 +155,10 @@ const ProductDetail = ({ match }) => {
                 ></LogicButton>
               </AmountContainer>
 
-              <CartButton to="/cart" onClick={() => dispatch(addToCart(product.id))}>
+              <CartButton
+                to="/cart"
+                onClick={() => dispatch(addToCart(product))}
+              >
                 Add To Cart
               </CartButton>
             </ContentHolder>
@@ -163,7 +166,7 @@ const ProductDetail = ({ match }) => {
         )}
       </PageContainer>
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetail
+export default ProductDetail;

@@ -1,9 +1,9 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   min-height: calc(80vh - 10rem);
-`
+`;
 
 export const GridContainer = styled.div`
   grid-template-columns: 200px 1fr;
@@ -11,28 +11,28 @@ export const GridContainer = styled.div`
   gap: 3rem 1.5rem;
   margin: 4rem auto;
   width: 74%;
-`
+`;
 
 export const SideBarContainer = styled.section`
   text-align: left;
-`
+`;
 
 export const SideBar = styled.div`
   position: sticky;
   top: 1rem;
-`
+`;
 
 //product Container
 
-export const ProductSection = styled.section``
+export const ProductSection = styled.section``;
 
 export const ProductGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   display: grid;
   gap: 2rem 1.5rem;
-`
+`;
 
-export const ProductContainer = styled.article``
+export const ProductContainer = styled.article``;
 
 export const ProductHeader = styled.div`
   position: relative;
@@ -53,7 +53,7 @@ export const ProductHeader = styled.div`
       opacity: 0.3;
     }
   }
-`
+`;
 
 export const ProductImage = styled.img`
   width: 100%;
@@ -62,12 +62,12 @@ export const ProductImage = styled.img`
   object-fit: cover;
   border-radius: 0.25rem;
   transition: all 0.3s linear;
-`
+`;
 
 export const ProductDesc = styled.p`
   color: #ab7a5f;
   letter-spacing: 0.1rem;
-`
+`;
 
 export const ProductFooter = styled.footer`
   margin-top: 1rem;
@@ -76,24 +76,24 @@ export const ProductFooter = styled.footer`
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
-`
+`;
 
 export const PriceContainer = styled.span`
   color: #ab7a5f;
   letter-spacing: 0.1rem;
-`
+`;
 export const SearchTitleStyled = styled.h5`
   margin: 1em 0;
   letter-spacing: 0.1rem;
   text-transform: capitalize;
   line-height: 1.25;
-`
+`;
 
 export const SearchColorContainer = styled.div`
   margin: 2em 0;
   display: flex;
   align-items: center;
-`
+`;
 
 export const SearchText = styled.input`
   padding: 0.5rem;
@@ -101,18 +101,18 @@ export const SearchText = styled.input`
   border-radius: 0.25rem;
   border-color: transparent;
   letter-spacing: 0.1rem;
-`
+`;
 
 export const PriceTag = styled.span`
   margin-bottom: 0.25rem;
 
   color: #324d67;
-`
+`;
 
 export const SearchPrice = styled.input`
   float: left;
-`
-export const ShippingLabel = styled.label``
+`;
+export const ShippingLabel = styled.label``;
 
 export const ShippingContainer = styled.div`
   display: grid;
@@ -121,7 +121,7 @@ export const ShippingContainer = styled.div`
   text-transform: capitalize;
   column-gap: 0.5rem;
   font-size: 1rem;
-`
+`;
 
 export const IconLink = styled(Link)`
   position: absolute;
@@ -140,9 +140,18 @@ export const IconLink = styled(Link)`
   transition: all 0.3s linear;
   opacity: 0;
   cursor: pointer;
-`
+`;
 export const IconIcon = styled.i`
   font-size: 1.25rem;
   color: #fff;
   font-weight: bolder;
-`
+`;
+
+export const SortContainer = styled.section`
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  column-gap: 2rem;
+`;

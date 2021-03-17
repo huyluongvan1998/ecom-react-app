@@ -1,14 +1,13 @@
-import React from "react"
-import "./App.css"
-import Header from "./pages/layout/header/header"
-import GlobalStyle from "./global.style"
-import Footer from "./pages/layout/footer/footer"
-import Home from "./pages/Home/index"
-import { Switch, Route } from "react-router-dom"
-import ProductPage from "./pages/products"
-import ProductDetail from "./pages/productDetails"
-import CartPage from "./pages/cart"
-
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import "./App.css";
+import GlobalStyle from "./global.style";
+import CartPage from "./pages/cart";
+import Home from "./pages/Home/index";
+import Footer from "./pages/layout/footer/footer";
+import Header from "./pages/layout/header/header";
+import ProductDetail from "./pages/productDetails";
+import ProductPage from "./pages/products";
 function App() {
   return (
     <div className="App">
@@ -27,7 +26,7 @@ function App() {
         <Footer />
       </GlobalStyle>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

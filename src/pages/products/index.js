@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux"
-import { SearchButton } from "../../components/button"
+import { useDispatch, useSelector } from "react-redux";
+import { SearchButton } from "../../components/button";
 import {
   ResetFilterButton,
   SearchCategoryButton,
-} from "../../components/button/style"
-import SelectOption from "../../components/select"
-import Toolbar from "../../components/toolbar/toolbar"
-import currencyHelper from "../../helper/currency"
-import { SearchListHelper } from "../../helper/searchList"
-import { ProductsSelector } from "../../store/modules/product/selector"
-import { fetchAllProduct } from "../../store/modules/product/slice"
+} from "../../components/button/style";
+import SelectOption from "../../components/select";
+import Toolbar from "../../components/toolbar/toolbar";
+import currencyHelper from "../../helper/currency";
+import { SearchListHelper } from "../../helper/searchList";
+import { ProductsSelector } from "../../store/modules/product/selector";
+import { fetchAllProduct } from "../../store/modules/product/slice";
 import {
   Container,
   GridContainer,
@@ -32,13 +32,14 @@ import {
   ShippingContainer,
   SideBar,
   SideBarContainer,
-} from "./style"
+  SortContainer,
+} from "./style";
 
 const ProductPage = () => {
-  const dispatch = useDispatch()
-  const products = useSelector(ProductsSelector)
+  const dispatch = useDispatch();
+  const products = useSelector(ProductsSelector);
   // search State;
-  const [productArray, setProductArr] = useState([])
+  const [productArray, setProductArr] = useState([]);
   const [filterState, setFilterState] = useState({
     searchText: "",
     searchCategory: "",
@@ -46,11 +47,14 @@ const ProductPage = () => {
     searchColor: "",
     searchPrice: 309999,
     freeshipping: false,
-  })
+    searchSort: "",
+  });
   // End Search State
 
+  const sortOptions = ["High Price", "Low Price", "Name (A-Z)", "Name (Z-A)"];
+
   //Category List
-  const categoryType = SearchListHelper("category")
+  const categoryType = SearchListHelper("category");
   let categoryList = ([...categoryType] || []).map((cate, idx) => (
     <div key={idx}>
       <SearchCategoryButton
@@ -64,16 +68,16 @@ const ProductPage = () => {
         {cate}
       </SearchCategoryButton>
     </div>
-  ))
+  ));
   //CategoryList
 
   // Company List
-  const companyType = SearchListHelper("company")
-  let companyList = [...companyType]
+  const companyType = SearchListHelper("company");
+  let companyList = [...companyType];
   // Company List
 
   //Color List
-  const colorType = SearchListHelper("color")
+  const colorType = SearchListHelper("color");
   let colorList = ([...colorType] || []).map((color, idx) => (
     <SearchButton
       key={idx}
@@ -86,7 +90,7 @@ const ProductPage = () => {
       }
       text={color === "All" ? color : ""}
     ></SearchButton>
-  ))
+  ));
   //Color List
 
   // Submit Function
@@ -98,59 +102,77 @@ const ProductPage = () => {
       searchColor: "All",
       searchPrice: 309999,
       freeshipping: false,
-    })
-  }
+    });
+  };
 
   const filterProduct = useCallback(() => {
-    let temp_arr = products || []
+    let temp_arr = products || [];
     //______________________________________________________Search by condition_______________________________________________________
     if (filterState.searchText) {
       temp_arr = temp_arr.filter((p) =>
         p.name.toLowerCase().includes(filterState.searchText.toLowerCase())
-      )
+      );
     }
     if (filterState.searchCategory) {
       temp_arr =
         filterState.searchCategory !== "All"
           ? temp_arr.filter((p) => p.category === filterState.searchCategory)
-          : temp_arr
+          : temp_arr;
     }
     if (filterState.searchCompany) {
       temp_arr =
         filterState.searchCompany !== "All"
           ? temp_arr.filter((p) => p.company === filterState.searchCompany)
-          : temp_arr
+          : temp_arr;
     }
     if (filterState.searchColor) {
       temp_arr =
         filterState.searchColor !== "All"
           ? temp_arr.filter((p) => p.colors.includes(filterState.searchColor))
-          : temp_arr
+          : temp_arr;
     }
     if (filterState.searchPrice) {
-      temp_arr = temp_arr.filter((p) => p.price <= filterState.searchPrice)
+      temp_arr = temp_arr.filter((p) => p.price <= filterState.searchPrice);
     }
     if (filterState.freeshipping) {
-      temp_arr = temp_arr.filter((p) => p.shipping)
+      temp_arr = temp_arr.filter((p) => p.shipping);
     }
-    setProductArr(temp_arr)
-  }, [filterState, products])
+    if (filterState.searchSort) {
+      switch (filterState.searchSort) {
+        case "High Price":
+          temp_arr = temp_arr.sort((a, b) => b.price - a.price);
+          break;
+        case "Low Price":
+          temp_arr = temp_arr.sort((a, b) => a.price - b.price);
+          break;
+        case "Name (A-Z)":
+          temp_arr = temp_arr.sort((a, b) => a.name > b.name);
+          break;
+        case "Name (Z-A)":
+          temp_arr = temp_arr.sort((a, b) => a.name < b.name).reverse();
+          break;
+        default:
+          break;
+      }
+    }
+    setProductArr(temp_arr);
+  }, [filterState, products]);
   //______________________________________________________Search by condition_______________________________________________________
 
   //*****************************************Initial Function ***************************************** */
   useEffect(() => {
-    dispatch(fetchAllProduct())
-  }, [dispatch])
+    dispatch(fetchAllProduct());
+  }, [dispatch]);
 
   useEffect(() => {
     if (products.length > 0) {
-      setProductArr([...products])
+      setProductArr([...products]);
     }
-  }, [products])
+  }, [products]);
 
   useEffect(() => {
-    filterProduct()
-  }, [filterProduct, filterState])
+    filterProduct();
+  }, [filterProduct, filterState]);
   //*****************************************Initial Function ***************************************** */
 
   let productCard =
@@ -175,7 +197,7 @@ const ProductPage = () => {
       <div>
         <h4>Sorry No Product Meet Your Search !</h4>
       </div>
-    )
+    );
 
   return (
     <div>
@@ -269,12 +291,31 @@ const ProductPage = () => {
 
           {/* PRODUCT SECTIONS */}
           <ProductSection>
+            <SortContainer>
+              <div>
+                <span className="pi pi-microsoft ml-20"></span>
+                <span className="pi pi-bars ml-20"></span>
+              </div>
+              <div>{products.length} Products Found</div>
+              <hr />
+              <SelectOption
+                name="companySearch"
+                id="companySearch"
+                options={sortOptions}
+                handleChange={(e) =>
+                  setFilterState((prev) => ({
+                    ...prev,
+                    searchSort: e.target.value,
+                  }))
+                }
+              />
+            </SortContainer>
             <ProductGrid>{productCard}</ProductGrid>
           </ProductSection>
         </GridContainer>
       </Container>
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;

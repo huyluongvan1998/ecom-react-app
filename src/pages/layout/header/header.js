@@ -1,5 +1,6 @@
-import "primeicons/primeicons.css"
-import React from "react"
+import "primeicons/primeicons.css";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   Navbar,
   NavbarCenter,
@@ -7,11 +8,16 @@ import {
   NavbarLogo,
   NavItem,
   NavList,
-} from "./style"
+  CartValue,
+  CartContainer,
+} from "./style";
 
-import StyledLink from "../../../components/link/index"
+import StyledLink from "../../../components/link/index";
+import { CartAmountSelector } from "../../../store/modules/product/selector";
 
-const header = () => {
+const Header = () => {
+  const cartAmount = useSelector(CartAmountSelector);
+
   return (
     <Navbar>
       <NavbarCenter>
@@ -31,8 +37,11 @@ const header = () => {
           <NavList>
             <StyledLink path="cart">
               <NavItem large grey>
-                <i className="pi pi-shopping-cart"></i>
-                Cart
+                <CartContainer>
+                  <i className="pi pi-shopping-cart"></i>
+                  <CartValue>{cartAmount}</CartValue>
+                  Cart
+                </CartContainer>
               </NavItem>
             </StyledLink>
             <StyledLink path="home">
@@ -45,7 +54,7 @@ const header = () => {
         </NavbarHeader>
       </NavbarCenter>
     </Navbar>
-  )
-}
+  );
+};
 
-export default header
+export default Header;

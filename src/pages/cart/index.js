@@ -1,19 +1,21 @@
-import React, { useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import Toolbar from "../../components/toolbar/toolbar"
-import currencyHelper from "../../helper/currency"
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Toolbar from "../../components/toolbar/toolbar";
+import currencyHelper from "../../helper/currency";
+import useLocalStorage from "../../hooks/localHook";
 import {
   // CartAmountSelector,
   CartProductSelector,
   TotalSelector,
-} from "../../store/modules/product/selector"
+} from "../../store/modules/product/selector";
 import {
+  deleteAll,
+  deleteProduct,
   productDecrement,
   productIncrement,
+  setCartAmount,
   subTotal,
-  deleteProduct,
-  deleteAll
-} from "../../store/modules/product/slice"
+} from "../../store/modules/product/slice";
 import {
   CartAmountContainer,
   CartAmountValue,
@@ -21,32 +23,44 @@ import {
   ColorCube,
   Container,
   ContentHeader,
-  MainContainer,
-  ProductContainer,
-  ProductTitle,
-  StyledBreakBar,
-  RemoveButton,
-  LinkContainer,
   ContinueButton,
-  TotalContainer,
+  LinkContainer,
+  MainContainer,
   PriceTag,
   PriceValue,
-} from "./style"
+  ProductContainer,
+  ProductTitle,
+  RemoveButton,
+  StyledBreakBar,
+  TotalContainer,
+} from "./style";
 const CartPage = () => {
-  // const cartAmount = useSelector(CartAmountSelector)
-  const cartProduct = useSelector(CartProductSelector)
-  const dispatch = useDispatch()
-  const total = useSelector(TotalSelector)
-  
+  // const cartAmount = useSelector(CartAmountSelector);
+  const cartProduct = useSelector(CartProductSelector);
+  const dispatch = useDispatch();
+  const total = useSelector(TotalSelector);
+  const [production, setProduction] = useLocalStorage("products", cartProduct);
+
   //Calculate Total Price
   useEffect(() => {
-    dispatch(subTotal())
-  }, [cartProduct, dispatch])
-// Calculate Total Price
+    dispatch(subTotal());
+    dispatch(setCartAmount());
+  }, [cartProduct, dispatch]);
+
+  const setLocal = useCallback(() => {
+    return cartProduct.length > 0
+      ? setProduction(cartProduct)
+      : production.map((p) => console.log("pro ", p.name));
+  }, [cartProduct, setProduction, production]);
+
+  useEffect(() => {
+    setLocal();
+  }, [setLocal]);
+  // Calculate Total Price
 
   const cartProducts =
-    cartProduct.length > 0 ? (
-      (cartProduct || []).map((product, idx) => (
+    production.length > 0 ? (
+      production.map((product, idx) => (
         <ProductContainer key={idx}>
           <ProductTitle>
             <img src={product.images[0].url} alt="err" />
@@ -62,24 +76,27 @@ const CartPage = () => {
             <CartLogicButton
               className="pi pi-minus"
               onClick={() => {
-                dispatch(productDecrement(product.id))
+                dispatch(productDecrement(product.id));
               }}
             />
             <CartAmountValue>{product.amount} </CartAmountValue>
             <CartLogicButton
               className="pi pi-plus"
               onClick={() => {
-                dispatch(productIncrement(product.id))
+                dispatch(productIncrement(product.id));
               }}
             />
           </CartAmountContainer>
           <PriceTag>${currencyHelper(product.amount * product.price)}</PriceTag>
-          <RemoveButton className="pi pi-trash" onClick={() => dispatch(deleteProduct(product.id))} />
+          <RemoveButton
+            className="pi pi-trash"
+            onClick={() => dispatch(deleteProduct(product.id))}
+          />
         </ProductContainer>
       ))
     ) : (
       <div>Your Cart Is Empty!</div>
-    )
+    );
 
   return (
     <div>
@@ -101,7 +118,9 @@ const CartPage = () => {
             <StyledBreakBar />
             <LinkContainer>
               <ContinueButton to="/product">Continue Shopping</ContinueButton>
-              <button onClick={() => dispatch(deleteAll())}>Clear Shopping Cart</button>
+              <button onClick={() => dispatch(deleteAll())}>
+                Clear Shopping Cart
+              </button>
             </LinkContainer>
             <TotalContainer>
               <div>
@@ -123,7 +142,7 @@ const CartPage = () => {
         </Container>
       </MainContainer>
     </div>
-  )
-}
+  );
+};
 
-export default CartPage
+export default CartPage;

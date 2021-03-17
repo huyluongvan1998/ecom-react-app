@@ -37,3 +37,28 @@ export const NavItem = styled.li`
   letter-spacing: 0.1rem;
   padding: 0.5rem !important;
 `;
+
+export const CartContainer = styled.span`
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  color: #102a42;
+`;
+
+export const CartValue = styled.span`
+  position: absolute;
+  top: -15px;
+  right: 52px;
+  background: #ab7a5f;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  color: #fff;
+  padding: 12px;
+`;
