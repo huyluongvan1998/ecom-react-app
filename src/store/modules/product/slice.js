@@ -11,6 +11,7 @@ const ProductSlice = createSlice({
     cartProducts: JSON.parse(window.localStorage.getItem("products")) || [],
     total: 0,
     isShow: false,
+    isCheck: false,
   },
   reducers: {
     // Configs
@@ -42,42 +43,38 @@ const ProductSlice = createSlice({
     },
 
     //Cart Function
-    increment: (state) => {
-      if (state.product.amount < state.product.stock) {
-        state.product.amount += 1;
-      }
-    },
-
-    decrement: (state) => {
-      if (state.product.amount > 0) {
-        state.product.amount -= 1;
-      }
-      return;
-    },
-
     productCartSaga: () => {},
     checkProductId: (state, { payload }) => {
-      let temp_arr = state.cartProducts.filter((p) => p.id === payload.id);
-      if (temp_arr.length > 0) {
+      console.log("payload ", payload);
+      if (state.cartProducts.filter((p) => p.id === payload.id).length > 0) {
+        state.isCheck = true;
         state.isShow = true;
       } else {
-        state.isShow = false;
+        state.isCheck = false;
       }
     },
 
     addToCart: (state, { payload }) => {
-      if (state.cartProducts.length > 0) {
-        state.cartProducts.some((p) => {
-          if (p.id === payload.id) {
-            return console.log(payload.id);
-          } else {
-            state.cartProducts.push(payload);
-            return history.push("/cart");
-          }
-        });
+      let quantity = 0;
+      if (state.isCheck) {
+        state.cartProducts.map((p) =>
+          p.id === payload.id
+            ? (quantity = payload.amount + p.amount)
+            : quantity
+        );
+        if (quantity > payload.stock) {
+          history.push("/cart");
+        } else {
+          state.cartProducts.map((p) =>
+            p.id === payload.id && p.amount + payload.amount < p.stock
+              ? (p.amount += payload.amount)
+              : (p.amount = p.stock)
+          );
+          return history.push("/cart");
+        }
       } else {
-        state.cartProducts = [...state.cartProducts, payload];
-        return history.push("/cart");
+        state.cartProducts.push(payload);
+        history.push("/cart");
       }
     },
 
@@ -85,20 +82,25 @@ const ProductSlice = createSlice({
 
     productIncrement: (state, action) => {
       const { payload } = action;
-      state.cartProducts.map((prod) =>
-        prod.id === payload && prod.amount <= prod.stock
-          ? (prod.amount += 1)
-          : prod.amount
-      );
+      state.cartProducts.map((prod) => {
+        if (prod.id === payload && prod.amount < prod.stock) {
+          state.product && state.product.amount++;
+          return prod.amount++;
+        } else {
+          return prod.amount;
+        }
+      });
     },
 
     productDecrement: (state, action) => {
       const { payload } = action;
       state.cartProducts.map((prod) => {
         if (prod.id === payload && prod.amount > 0) {
-          return (prod.amount -= 1);
+          state.product && state.product.amount--;
+          return prod.amount--;
+        } else {
+          return prod.amount;
         }
-        return prod.amount;
       });
     },
     subTotal: (state) => {
@@ -109,7 +111,6 @@ const ProductSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       const { payload } = action;
-      console.log("test: ", payload);
       state.cartProducts = state.cartProducts.filter((p) => p.id !== payload);
     },
     deleteAll: (state) => {

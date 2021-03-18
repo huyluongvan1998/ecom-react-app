@@ -23,3 +23,6 @@ export const TotalSelector = createSelector(getTotal, (p) => p);
 
 const getIsShow = (state) => state.product.isShow;
 export const IsShowSelector = createSelector(getIsShow, (p) => p);
+
+const getIsCheck = (state) => state.product.isCheck;
+export const IsCheckSelector = createSelector(getIsCheck, (p) => p);

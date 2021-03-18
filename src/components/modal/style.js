@@ -22,3 +22,52 @@ export const StyledModal = styled.div`
   z-index: 9999;
   background: white;
 `;
+
+export const ModalTitle = styled.div`
+  display: block;
+  margin: 5px auto;
+  font-size: 2.5em;
+  text-align: center;
+  border-bottom: 2px solid #bcccdc;
+
+  & > h3,
+  i {
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+    color: #dc3545;
+  }
+`;
+
+export const ModalContent = styled.div`
+  margin: 0.5em auto;
+  display: block;
+  text-align: center;
+  & > h3 {
+    font-size: 1em;
+    letter-spacing: 0.1rem;
+    font-weight: bolder;
+  }
+
+  & > span {
+    letter-spacing: 0.1rem;
+  }
+`;
+
+export const ButtonHolder = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row;
+  width: 100%;
+  margin: 0 auto;
+`;
+
+export const StyledButton = styled.button`
+  padding: 20px;
+  background: ${(props) => (props.cancel ? "#fff" : "#2196f3")};
+  color: ${(props) => (props.cancel ? "#607D8B" : "#fff")};
+  margin: 0 auto;
+  border: none;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
+`;

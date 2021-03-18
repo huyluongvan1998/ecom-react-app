@@ -1,4 +1,6 @@
 import axios from "axios";
+import * as selectors from "store/modules/product/selector";
+import { select } from "redux-saga/effects";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   addToCart,
@@ -11,6 +13,7 @@ import {
   setFetchProduct,
   startLoading,
 } from "./slice";
+import history from "utils/history";
 
 function* handleFetchAllProduct() {
   try {
@@ -47,7 +50,12 @@ function* handleFetchProductSaga() {
 
 function* cartProductHandle({ payload }) {
   yield put(checkProductId(payload));
-  yield put(addToCart(payload));
+  const isCheck = yield select(selectors.IsCheckSelector);
+  if (isCheck) {
+  } else {
+    yield put(addToCart(payload));
+    history.push("/cart");
+  }
 }
 
 function* cartProductHandleSaga() {

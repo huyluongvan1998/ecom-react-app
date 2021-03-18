@@ -1,18 +1,21 @@
+import Modal from "components/modal";
 import Toolbar from "components/toolbar/toolbar";
 import currencyHelper from "helper/currency";
 import ConvertStarHelper from "helper/starReview";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  AmountSelector,
+  IsShowSelector,
   LoadingSelector,
   ProductSelector,
 } from "store/modules/product/selector";
 import {
-  decrement,
+  addToCart,
   fetchProduct,
-  increment,
   productCartSaga,
+  productDecrement,
+  productIncrement,
+  toggleShow,
 } from "store/modules/product/slice";
 import {
   AmountContainer,
@@ -44,7 +47,7 @@ const ProductDetail = ({ match }) => {
   // USE SELECTOR SECTION
   const product = useSelector(ProductSelector);
   const isLoading = useSelector(LoadingSelector);
-  const amount = useSelector(AmountSelector);
+  const isShow = useSelector(IsShowSelector);
   // USE SELECTOR SECTION
 
   const starReview = ConvertStarHelper(product.stars);
@@ -88,6 +91,18 @@ const ProductDetail = ({ match }) => {
       <Toolbar Path="Home" Page="Product" Route="Name" />
       <PageContainer>
         <BackHomeLink to="/product">Back To Products</BackHomeLink>
+        {isShow ? (
+          <Modal
+            title="Warning"
+            content="Duplicate Product"
+            icon="pi-exclamation-triangle"
+            clicked={() => {
+              dispatch(addToCart(product));
+              dispatch(toggleShow());
+            }}
+          />
+        ) : null}
+
         {/* Product Session */}
         {!isLoading && (
           <ProductGrid>
@@ -145,16 +160,21 @@ const ProductDetail = ({ match }) => {
               <AmountContainer>
                 <LogicButton
                   className="pi pi-minus"
-                  onClick={() => dispatch(decrement())}
+                  onClick={() => dispatch(productDecrement(product.id))}
                 ></LogicButton>
-                <AmountValue>{amount}</AmountValue>
+                <AmountValue>{product.amount}</AmountValue>
                 <LogicButton
                   className="pi pi-plus"
-                  onClick={() => dispatch(increment())}
+                  onClick={() => dispatch(productIncrement(product.id))}
                 ></LogicButton>
               </AmountContainer>
 
-              <CartButton onClick={() => dispatch(productCartSaga(product))}>
+              <CartButton
+                disabled={product.stock === 0 ? true : false}
+                onClick={() => {
+                  dispatch(productCartSaga(product));
+                }}
+              >
                 Add To Cart
               </CartButton>
             </ContentHolder>

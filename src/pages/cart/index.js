@@ -43,7 +43,6 @@ const CartPage = () => {
 
   //test
   const setLocal = useCallback(() => {
-    console.log("ahihi");
     setProduction(cartProduct);
   }, [cartProduct, setProduction]);
   //Calculate Total Price
