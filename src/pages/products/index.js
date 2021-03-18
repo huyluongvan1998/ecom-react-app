@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { SearchButton } from "../../components/button";
+import { SearchButton } from "components/button";
 import {
   ResetFilterButton,
   SearchCategoryButton,
-} from "../../components/button/style";
-import SelectOption from "../../components/select";
-import Toolbar from "../../components/toolbar/toolbar";
-import currencyHelper from "../../helper/currency";
-import { SearchListHelper } from "../../helper/searchList";
-import { ProductsSelector } from "../../store/modules/product/selector";
-import { fetchAllProduct } from "../../store/modules/product/slice";
+} from "components/button/style";
+import SelectOption from "components/select";
+import Toolbar from "components/toolbar/toolbar";
+import currencyHelper from "helper/currency";
+import { SearchListHelper } from "helper/searchList";
+import { ProductsSelector } from "store/modules/product/selector";
+import { fetchAllProduct } from "store/modules/product/slice";
 import {
   Container,
   GridContainer,

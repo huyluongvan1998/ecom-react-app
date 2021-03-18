@@ -1,13 +1,14 @@
+import GlobalStyle from "global.style";
+import CartPage from "pages/cart";
+import Home from "pages/Home";
+import Footer from "pages/layout/footer/footer";
+import Header from "pages/layout/header/header";
+import ProductDetail from "pages/productDetails";
+import ProductPage from "pages/products";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import GlobalStyle from "./global.style";
-import CartPage from "./pages/cart";
-import Home from "./pages/Home/index";
-import Footer from "./pages/layout/footer/footer";
-import Header from "./pages/layout/header/header";
-import ProductDetail from "./pages/productDetails";
-import ProductPage from "./pages/products";
+
 const App = () => {
   return (
     <div className="App">

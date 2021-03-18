@@ -1,43 +1,41 @@
-import { useEffect, useState } from "react";
-import React from "react";
+import Toolbar from "components/toolbar/toolbar";
+import currencyHelper from "helper/currency";
+import ConvertStarHelper from "helper/starReview";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Toolbar from "../../components/toolbar/toolbar";
-import ConvertStarHelper from "../../helper/starReview";
-import currencyHelper from "../../helper/currency";
 import {
-  BackHomeLink,
-  PageContainer,
-  ProductGrid,
-  ImageHolder,
-  GalleryContainer,
-  Image,
-  ProductTitle,
-  PriceTag,
-  ContentHolder,
-  StyledParagraph,
-  ContentSubTitle,
-  SubTitle,
-  StyledBreak,
-  ColorButton,
-  ColorButtonContainer,
-  AmountContainer,
-  LogicButton,
-  AmountValue,
-  ColorContainer,
-  CartButton,
-} from "./style";
-import {
-  fetchProduct,
-  increment,
-  decrement,
-  addToCart,
-  checkProductId,
-} from "../../store/modules/product/slice";
-import {
-  ProductSelector,
   AmountSelector,
   LoadingSelector,
-} from "../../store/modules/product/selector";
+  ProductSelector,
+} from "store/modules/product/selector";
+import {
+  decrement,
+  fetchProduct,
+  increment,
+  productCartSaga,
+} from "store/modules/product/slice";
+import {
+  AmountContainer,
+  AmountValue,
+  BackHomeLink,
+  CartButton,
+  ColorButton,
+  ColorButtonContainer,
+  ColorContainer,
+  ContentHolder,
+  ContentSubTitle,
+  GalleryContainer,
+  Image,
+  ImageHolder,
+  LogicButton,
+  PageContainer,
+  PriceTag,
+  ProductGrid,
+  ProductTitle,
+  StyledBreak,
+  StyledParagraph,
+  SubTitle,
+} from "./style";
 const ProductDetail = ({ match }) => {
   // GET PARAMS FROM URL AND DISPATCH
   const paramsUrl = match.params.id;
@@ -156,7 +154,7 @@ const ProductDetail = ({ match }) => {
                 ></LogicButton>
               </AmountContainer>
 
-              <CartButton onClick={() => dispatch(checkProductId(product))}>
+              <CartButton onClick={() => dispatch(productCartSaga(product))}>
                 Add To Cart
               </CartButton>
             </ContentHolder>

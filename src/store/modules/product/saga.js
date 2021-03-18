@@ -1,47 +1,63 @@
-import axios from "axios"
-import { takeLatest, call, all, put } from "redux-saga/effects"
+import axios from "axios";
+import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
-  fetchProduct,
-  setFetchProduct,
-  fetchAllProduct,
-  setAllFetchProduct,
-  startLoading,
+  addToCart,
+  checkProductId,
   endLoading,
-} from "./slice"
+  fetchAllProduct,
+  fetchProduct,
+  productCartSaga,
+  setAllFetchProduct,
+  setFetchProduct,
+  startLoading,
+} from "./slice";
 
 function* handleFetchAllProduct() {
   try {
-    yield put(startLoading())
-    const res = yield axios.get(" https://course-api.com/react-store-products")
-    yield put(setAllFetchProduct(res.data))
-    yield put(endLoading())
+    yield put(startLoading());
+    const res = yield axios.get(" https://course-api.com/react-store-products");
+    yield put(setAllFetchProduct(res.data));
+    yield put(endLoading());
   } catch (error) {
-    console.error("error: ", error.message)
+    console.error("error: ", error.message);
   }
 }
 
 function* handleFetchAllProductSaga() {
-  yield takeLatest(fetchAllProduct, handleFetchAllProduct)
+  yield takeLatest(fetchAllProduct, handleFetchAllProduct);
 }
 // Fetch 1 product
 function* handleFetchProduct(action) {
   try {
-    yield put(startLoading())
-    const { payload } = action
+    yield put(startLoading());
+    const { payload } = action;
     const res = yield axios.get(
       `https://course-api.com/react-store-single-product?id=${payload}`
-    )
-    yield put(setFetchProduct(res.data))
-    yield put(endLoading())
+    );
+    yield put(setFetchProduct(res.data));
+    yield put(endLoading());
   } catch (error) {
-    console.error("error: ", error.message)
+    console.error("error: ", error.message);
   }
 }
 
 function* handleFetchProductSaga() {
-  yield takeLatest(fetchProduct, handleFetchProduct)
+  yield takeLatest(fetchProduct, handleFetchProduct);
+}
+
+function* cartProductHandle({ payload }) {
+  yield put(checkProductId(payload));
+  yield put(addToCart(payload));
+}
+
+function* cartProductHandleSaga() {
+  yield takeLatest(productCartSaga, cartProductHandle);
 }
 
 export function* ProductMiddleware() {
-  yield all([call(handleFetchProductSaga), call(handleFetchAllProductSaga)])
+  yield all([
+    call(handleFetchProductSaga),
+    call(handleFetchAllProductSaga),
+    call(cartProductHandleSaga),
+  ]);
 }

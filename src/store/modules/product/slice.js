@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Redirect } from "react-router";
+import history from "utils/history";
 
 const ProductSlice = createSlice({
   name: "product",
@@ -54,12 +54,14 @@ const ProductSlice = createSlice({
       }
       return;
     },
+
+    productCartSaga: () => {},
     checkProductId: (state, { payload }) => {
       let temp_arr = state.cartProducts.filter((p) => p.id === payload.id);
       if (temp_arr.length > 0) {
         state.isShow = true;
       } else {
-        <Redirect to="/cart" />;
+        state.isShow = false;
       }
     },
 
@@ -67,13 +69,15 @@ const ProductSlice = createSlice({
       if (state.cartProducts.length > 0) {
         state.cartProducts.some((p) => {
           if (p.id === payload.id) {
-            return alert("Already In Cart");
+            return console.log(payload.id);
           } else {
-            return state.cartProducts.push(payload);
+            state.cartProducts.push(payload);
+            return history.push("/cart");
           }
         });
       } else {
         state.cartProducts = [...state.cartProducts, payload];
+        return history.push("/cart");
       }
     },
 
@@ -135,6 +139,7 @@ export const {
   setCartAmount,
   toggleShow,
   checkProductId,
+  productCartSaga,
 } = ProductSlice.actions;
 
 export default ProductSlice.reducer;

@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Toolbar from "../../components/toolbar/toolbar";
-import currencyHelper from "../../helper/currency";
-import useLocalStorage from "../../hooks/localHook";
+import Toolbar from "components/toolbar/toolbar";
+import currencyHelper from "helper/currency";
+import useLocalStorage from "hooks/localHook";
 import {
   // CartAmountSelector,
   CartProductSelector,
   TotalSelector,
-} from "../../store/modules/product/selector";
+} from "store/modules/product/selector";
 import {
   deleteAll,
   deleteProduct,
@@ -15,7 +15,7 @@ import {
   productIncrement,
   setCartAmount,
   subTotal,
-} from "../../store/modules/product/slice";
+} from "store/modules/product/slice";
 import {
   CartAmountContainer,
   CartAmountValue,
@@ -42,22 +42,17 @@ const CartPage = () => {
   const [production, setProduction] = useLocalStorage("products", []);
 
   //test
+  const setLocal = useCallback(() => {
+    console.log("ahihi");
+    setProduction(cartProduct);
+  }, [cartProduct, setProduction]);
   //Calculate Total Price
   useEffect(() => {
     dispatch(subTotal());
     dispatch(setCartAmount());
-    console.log("test: ", cartProduct);
-  }, [cartProduct, dispatch]);
-
-  const setLocal = useCallback(() => {
-    if (cartProduct.length > 0) {
-      setProduction(cartProduct);
-    }
-  }, [cartProduct, setProduction]);
-
-  useEffect(() => {
     setLocal();
-  }, [setLocal]);
+  }, [cartProduct, dispatch, setLocal]);
+
   // Calculate Total Price
 
   const cartProducts =

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/button/index";
+import Button from "components/button/index";
 import { Content, ContentHolder, ContentTitle, GridContainer } from "./style";
 const Home = () => {
   return (
