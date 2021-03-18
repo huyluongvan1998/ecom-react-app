@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Redirect } from "react-router";
 
 const ProductSlice = createSlice({
   name: "product",
@@ -7,9 +8,9 @@ const ProductSlice = createSlice({
     product: {},
     products: [],
     cartAmount: 0,
-    cartProducts: [],
+    cartProducts: JSON.parse(window.localStorage.getItem("products")) || [],
     total: 0,
-    isShow: true,
+    isShow: false,
   },
   reducers: {
     // Configs
@@ -53,6 +54,15 @@ const ProductSlice = createSlice({
       }
       return;
     },
+    checkProductId: (state, { payload }) => {
+      let temp_arr = state.cartProducts.filter((p) => p.id === payload.id);
+      if (temp_arr.length > 0) {
+        state.isShow = true;
+      } else {
+        <Redirect to="/cart" />;
+      }
+    },
+
     addToCart: (state, { payload }) => {
       if (state.cartProducts.length > 0) {
         state.cartProducts.some((p) => {
@@ -124,6 +134,7 @@ export const {
   deleteAll,
   setCartAmount,
   toggleShow,
+  checkProductId,
 } = ProductSlice.actions;
 
 export default ProductSlice.reducer;

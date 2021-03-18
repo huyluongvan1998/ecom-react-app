@@ -8,7 +8,7 @@ import Footer from "./pages/layout/footer/footer";
 import Header from "./pages/layout/header/header";
 import ProductDetail from "./pages/productDetails";
 import ProductPage from "./pages/products";
-function App() {
+const App = () => {
   return (
     <div className="App">
       <GlobalStyle>
@@ -27,6 +27,6 @@ function App() {
       </GlobalStyle>
     </div>
   );
-}
+};
 
 export default App;

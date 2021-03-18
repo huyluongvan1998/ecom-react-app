@@ -36,22 +36,24 @@ import {
 } from "./style";
 const CartPage = () => {
   // const cartAmount = useSelector(CartAmountSelector);
-  const cartProduct = useSelector(CartProductSelector);
   const dispatch = useDispatch();
   const total = useSelector(TotalSelector);
-  const [production, setProduction] = useLocalStorage("products", cartProduct);
+  const cartProduct = useSelector(CartProductSelector);
+  const [production, setProduction] = useLocalStorage("products", []);
 
+  //test
   //Calculate Total Price
   useEffect(() => {
     dispatch(subTotal());
     dispatch(setCartAmount());
+    console.log("test: ", cartProduct);
   }, [cartProduct, dispatch]);
 
   const setLocal = useCallback(() => {
-    return cartProduct.length > 0
-      ? setProduction(cartProduct)
-      : production.map((p) => console.log("pro ", p.name));
-  }, [cartProduct, setProduction, production]);
+    if (cartProduct.length > 0) {
+      setProduction(cartProduct);
+    }
+  }, [cartProduct, setProduction]);
 
   useEffect(() => {
     setLocal();
@@ -60,7 +62,7 @@ const CartPage = () => {
 
   const cartProducts =
     production.length > 0 ? (
-      production.map((product, idx) => (
+      (production || []).map((product, idx) => (
         <ProductContainer key={idx}>
           <ProductTitle>
             <img src={product.images[0].url} alt="err" />

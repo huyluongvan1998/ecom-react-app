@@ -31,6 +31,7 @@ import {
   increment,
   decrement,
   addToCart,
+  checkProductId,
 } from "../../store/modules/product/slice";
 import {
   ProductSelector,
@@ -155,10 +156,7 @@ const ProductDetail = ({ match }) => {
                 ></LogicButton>
               </AmountContainer>
 
-              <CartButton
-                to="/cart"
-                onClick={() => dispatch(addToCart(product))}
-              >
+              <CartButton onClick={() => dispatch(checkProductId(product))}>
                 Add To Cart
               </CartButton>
             </ContentHolder>
