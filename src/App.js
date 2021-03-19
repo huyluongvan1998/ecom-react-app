@@ -5,11 +5,17 @@ import Footer from "pages/layout/footer/footer";
 import Header from "pages/layout/header/header";
 import ProductDetail from "pages/productDetails";
 import ProductPage from "pages/products";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import { setCartAmount } from "store/modules/product/slice";
 import "./App.css";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCartAmount());
+  }, [dispatch]);
   return (
     <div className="App">
       <GlobalStyle>

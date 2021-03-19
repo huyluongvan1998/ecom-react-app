@@ -1,5 +1,5 @@
 import "primeicons/primeicons.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Navbar,
@@ -14,10 +14,18 @@ import {
 
 import StyledLink from "../../../components/link/index";
 import { CartAmountSelector } from "../../../store/modules/product/selector";
+import useLocalStorage from "hooks/localHook";
 
 const Header = () => {
   const cartAmount = useSelector(CartAmountSelector);
+  const [cartAmountValue, setCartAmountValue] = useLocalStorage(
+    "cartAmount",
+    0
+  );
 
+  useEffect(() => {
+    setCartAmountValue(cartAmount);
+  }, [cartAmount, setCartAmountValue]);
   return (
     <Navbar>
       <NavbarCenter>
@@ -39,7 +47,7 @@ const Header = () => {
               <NavItem large grey>
                 <CartContainer>
                   <i className="pi pi-shopping-cart"></i>
-                  <CartValue>{cartAmount}</CartValue>
+                  <CartValue>{cartAmountValue}</CartValue>
                   Cart
                 </CartContainer>
               </NavItem>

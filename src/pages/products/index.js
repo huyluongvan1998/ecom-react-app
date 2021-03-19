@@ -34,6 +34,7 @@ import {
   SideBarContainer,
   SortContainer,
 } from "./style";
+import Spinner from "components/spinner";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -195,7 +196,7 @@ const ProductPage = () => {
       ))
     ) : (
       <div>
-        <h4>Sorry No Product Meet Your Search !</h4>
+        <Spinner />
       </div>
     );
 
@@ -299,8 +300,8 @@ const ProductPage = () => {
               <div>{products.length} Products Found</div>
               <hr />
               <SelectOption
-                name="companySearch"
-                id="companySearch"
+                name="sortBar"
+                id="sortBar"
                 options={sortOptions}
                 handleChange={(e) =>
                   setFilterState((prev) => ({

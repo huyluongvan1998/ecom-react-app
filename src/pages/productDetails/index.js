@@ -1,4 +1,5 @@
 import Modal from "components/modal";
+import Spinner from "components/spinner";
 import Toolbar from "components/toolbar/toolbar";
 import currencyHelper from "helper/currency";
 import ConvertStarHelper from "helper/starReview";
@@ -104,7 +105,7 @@ const ProductDetail = ({ match }) => {
         ) : null}
 
         {/* Product Session */}
-        {!isLoading && (
+        {!isLoading ? (
           <ProductGrid>
             {/* Product Details (IMG and Gallery) */}
             {productDetails}
@@ -179,6 +180,8 @@ const ProductDetail = ({ match }) => {
               </CartButton>
             </ContentHolder>
           </ProductGrid>
+        ) : (
+          <Spinner />
         )}
       </PageContainer>
     </div>

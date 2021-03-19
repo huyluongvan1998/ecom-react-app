@@ -40,7 +40,6 @@ const CartPage = () => {
   const total = useSelector(TotalSelector);
   const cartProduct = useSelector(CartProductSelector);
   const [production, setProduction] = useLocalStorage("products", []);
-
   //test
   const setLocal = useCallback(() => {
     setProduction(cartProduct);
